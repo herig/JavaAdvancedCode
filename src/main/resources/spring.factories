@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+        com.herig.week05.job08.config.StudentConfig
