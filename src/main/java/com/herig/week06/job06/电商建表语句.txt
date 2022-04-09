@@ -1,0 +1,204 @@
+--1.用户表
+CREATE TABLE USER (
+	user_id BIGINT PRIMARY KEY COMMENT '用户id',
+	user_name VARCHAR ( 200 ) COMMENT '用户名称',
+	PASSWORD VARCHAR ( 20 ) COMMENT '用户密码',
+	nick_name VARCHAR ( 200 ) COMMENT '用户昵称',
+	id_number VARCHAR ( 30 ) COMMENT '用户身份证号',
+	phone_number VARCHAR ( 20 ) COMMENT '手机号码',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '用户表';
+
+CREATE TABLE user_address (
+	address_id BIGINT PRIMARY KEY COMMENT '收货地址id',
+	user_id BIGINT COMMENT '用户id',
+	province INT COMMENT '省',
+	city INT COMMENT '市',
+	district INT COMMENT '区',
+	address VARCHAR ( 400 ) COMMENT '详细地址',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '用户收货地址表';
+
+--2.订单
+CREATE TABLE order_info (
+	order_id BIGINT PRIMARY KEY COMMENT '订单id',
+	order_number VARCHAR ( 20 ) COMMENT '订单编号',
+	user_id BIGINT COMMENT '用户id',
+	total_price DECIMAL ( 8, 2 ) COMMENT '订单总金额',
+	total_discount_price DECIMAL ( 8, 2 ) COMMENT '订单优惠后总金额',
+	order_status VARCHAR ( 20 ) COMMENT '订单状态',
+	logistics_id BIGINT COMMENT '物流id',
+	send_province INT COMMENT '发货地址所在省',
+	send_city INT COMMENT '发货地址所在市',
+	send_district INT COMMENT '发货地址所在区',
+	send_address VARCHAR ( 400 ) COMMENT '发货地址详细地址',
+	receive_province INT COMMENT '收货地址所在省',
+	receive_city INT COMMENT '收货地址所在市',
+	receive_district INT COMMENT '收货地址所在区',
+	receive_address VARCHAR ( 400 ) COMMENT '收货地址详细地址',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '订单表';
+
+CREATE TABLE ORDER_DETAIL (
+	detail_id BIGINT PRIMARY KEY COMMENT '订单详情id',
+	order_id BIGINT COMMENT '订单id',
+	product_id BIGINT COMMENT '商品id',
+	price DECIMAL ( 8, 2 ) COMMENT '商品单价',
+	quantity INT COMMENT '商品数量',
+	discount_price DECIMAL ( 8, 2 ) COMMENT '优惠后价格',
+	discount_type VARCHAR ( 20 ) COMMENT '折扣类型',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '订单详情表';
+
+
+--3.商品
+CREATE TABLE product (
+	product_id BIGINT PRIMARY KEY COMMENT '商品id',
+	product_number VARCHAR ( 20 ) COMMENT '商品编号',
+	product_name VARCHAR ( 200 ) COMMENT '商品名称',
+	product_type VARCHAR ( 20 ) COMMENT '商品类型',
+	price DECIMAL ( 8, 2 ) COMMENT '商品价格',
+	quantity INT COMMENT '商品数量',
+	weight DECIMAL ( 8, 8 ) COMMENT '商品重量',
+	unit VARCHAR ( 20 ) COMMENT '商品重量单位',
+	supplier_id BIGINT COMMENT '供应商id',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '商品表';
+
+--4.购物车
+CREATE TABLE shopping_cart (
+	shopping_id BIGINT PRIMARY KEY COMMENT '购物车id',
+	user_id BIGINT COMMENT '用户id',
+	total_price DECIMAL ( 8, 2 ) COMMENT '总价格',
+	total_discount_price DECIMAL ( 8, 2 ) COMMENT '优惠总价格',
+	quatity INT COMMENT '数量',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '购物车表';
+
+CREATE TABLE shopping_cart_detail (
+	detail_id BIGINT PRIMARY KEY COMMENT '购物车明细id',
+	shopping_id BIGINT COMMENT '购物车id',
+	product_id BIGINT COMMENT '商品id',
+	price DECIMAL ( 8, 2 ) COMMENT '单价',
+	quantity INT COMMENT '商品数量',
+	discount_price DECIMAL ( 8, 2 ) COMMENT '优惠后价格',
+	discount_type VARCHAR ( 20 ) COMMENT '折扣类型',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '购物车详情表';
+
+--5.供应商
+CREATE TABLE supplier (
+	supplier_id BIGINT PRIMARY KEY COMMENT '供应商id',
+	supplier_name VARCHAR ( 200 ) COMMENT '供应商名称',
+	register_number VARCHAR ( 20 ) COMMENT '供应商注册号码',
+	contact VARCHAR ( 20 ) COMMENT '联系人',
+	phone VARCHAR ( 20 ) COMMENT '联系人号码',
+	address VARCHAR ( 200 ) COMMENT '地址',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '供应商表';
+
+--6.仓库
+CREATE TABLE warehouse (
+	warehouse_id BIGINT PRIMARY KEY COMMENT '仓库id',
+	warehouse_name VARCHAR ( 200 ) COMMENT '仓库名称',
+	warehouse_number VARCHAR ( 20 ) COMMENT '仓库号码',
+	contact VARCHAR ( 20 ) COMMENT '仓库联系人',
+	phone VARCHAR ( 20 ) COMMENT '仓库联系人电话',
+	province INT COMMENT '省',
+	city INT COMMENT '市',
+	district INT COMMENT '区',
+	address VARCHAR ( 400 ) COMMENT '详细地址',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '仓库表';
+
+CREATE TABLE warehouse_stock (
+	stock_id BIGINT PRIMARY KEY COMMENT '库存id',
+	warehouse_id BIGINT COMMENT '仓库id',
+	product_id BIGINT COMMENT '商品id',
+	quantity INT ( 20 ) COMMENT '数量',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '库存表';
+
+--7.物流
+CREATE TABLE logistics (
+	logistics_id BIGINT PRIMARY KEY COMMENT '物流id',
+	logistics_number BIGINT COMMENT '物流编号',
+	logistics_company INT COMMENT '物流公司',
+	send_province INT COMMENT '发货地址所在省',
+	send_city INT COMMENT '发货地址所在市',
+	send_district INT COMMENT '发货地址所在区',
+	send_address VARCHAR ( 400 ) COMMENT '发货地址详细地址',
+	receive_province INT COMMENT '收货地址所在省',
+	receive_city INT COMMENT '收货地址所在市',
+	receive_district INT COMMENT '收货地址所在区',
+	receive_address VARCHAR ( 400 ) COMMENT '收货地址详细地址',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '物流表';
+
+CREATE TABLE logistics_detail (
+	deatail_id BIGINT PRIMARY KEY COMMENT '物流详情id',
+	logistics_id BIGINT COMMENT '物流id',
+	current_province INT COMMENT '当前地址所在省',
+	current_city INT COMMENT '当前地址所在市',
+	current_district INT COMMENT '当前地址所在区',
+	current_address VARCHAR ( 400 ) COMMENT '当前详细地址',
+	current_status VARCHAR ( 20 ) COMMENT '当前状态',
+	courier_name VARCHAR ( 20 ) COMMENT '当前配送员',
+	courier_phone VARCHAR ( 20 ) COMMENT '当前配送员电话',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '物流详情表';
+
+--8.退货
+CREATE TABLE return_product (
+	return_id BIGINT PRIMARY KEY COMMENT '退货id',
+	order_id BIGINT COMMENT '订单id',
+	product_id BIGINT COMMENT '商品id',
+	quantity INT COMMENT '退货数量',
+	amount DECIMAL ( 8, 2 ) COMMENT '退货金额',
+	logistics_id BIGINT COMMENT '物流id',
+	send_province INT COMMENT '退货发出地址所在省',
+	send_city INT COMMENT '退货发出地址所在市',
+	send_district INT COMMENT '退货发出地址所在区',
+	send_address VARCHAR ( 400 ) COMMENT '退货发出地址详细地址',
+	receive_province INT COMMENT '退货收件地址所在省',
+	receive_city INT COMMENT '退货收件地址所在市',
+	receive_district INT COMMENT '退货收件地址所在区',
+	receive_address VARCHAR ( 400 ) COMMENT '退货收件地址详细地址' 
+) COMMENT '退货表';
+
+--10.基础表
+CREATE TABLE base_province(
+  province_id INT PRIMARY KEY COMMENT '省',
+  province_name VARCHAR ( 200 ) COMMENT '省名',
+  create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间'
+) COMMENT '省表';
+
+CREATE TABLE base_city (
+	city_id INT PRIMARY KEY COMMENT '市',
+	province_id INT COMMENT '省',
+	city_name VARCHAR ( 200 ) COMMENT '市名',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '市表';
+
+CREATE TABLE base_distict (
+	distict_id INT PRIMARY KEY COMMENT '区',
+	province_id INT COMMENT '省',
+	city_id INT COMMENT '市',
+	province_name VARCHAR ( 200 ) COMMENT '区名',
+	create_time TIMESTAMP COMMENT '创建时间',
+	lastupdate_time TIMESTAMP COMMENT '最后更新时间' 
+) COMMENT '区表';
