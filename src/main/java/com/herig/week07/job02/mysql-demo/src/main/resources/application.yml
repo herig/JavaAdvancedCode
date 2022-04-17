@@ -1,0 +1,14 @@
+server:
+  port: 8801
+
+mybatis:
+  mapper-locations: classpath:/com/herig/mysqldemo/mapper/*.xml
+  type-aliases-package: com.herig.mysqldemo.pojo
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/herig?serverTime=UTC&userUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+
