@@ -1,0 +1,32 @@
+# 指定数据源名
+spring:
+  shardingsphere:
+    datasource:
+       names: ds0,ds1
+       ds0: # 配置第 1 个数据源
+         type: com.zaxxer.hikari.HikariDataSource
+         driver-class-name: com.mysql.cj.jdbc.Driver
+         jdbc-url: jdbc:mysql://localhost:3306/herig?serverTime=UTC&userUnicode=true&characterEncoding=utf-8
+         username: root
+         password: 123456
+       ds1: # 配置第 2 个数据源
+         type: com.zaxxer.hikari.HikariDataSource
+         driver-class-name: com.mysql.cj.jdbc.Driver
+         jdbc-url: jdbc:mysql://localhost:3307/herig?serverTime=UTC&userUnicode=true&characterEncoding=utf-8
+         username: root
+         password: 123456
+   #读写分离配置
+   readwriteSplitting:
+     data-sources:
+       ds:
+         type: Static
+         loadBalancerName: my
+         props:
+           write-data-source-name: ds0
+           read-data-source-names: ds1
+       loadBalancers:
+         my: # 负载均衡算法名称
+           type: ROUND_ROBIN # 负载均衡算法类型
+           props:
+             default: 0
+
