@@ -1,0 +1,12 @@
+server:
+  port: 8801
+
+mybatis:
+  mapper-locations: classpath:/com/herig/useShardingProxy/mapper/*.xml
+  type-aliases-package: com.herig.useShardingProxy.dto
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/sharding_db
+    username: root
+    password: root

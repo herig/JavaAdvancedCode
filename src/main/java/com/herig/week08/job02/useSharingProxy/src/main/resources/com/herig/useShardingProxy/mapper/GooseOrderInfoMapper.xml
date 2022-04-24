@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.herig.useShardingProxy.mapper.GooseOrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.herig.useShardingProxy.dto.GooseOrderInfo">
+        <result column="order_id" property="orderId" jdbcType="DECIMAL" />
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+        <result column="total_discount_price" property="totalDiscountPrice" jdbcType="DECIMAL" />
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+        <result column="logistics_id" property="logisticsId" jdbcType="DECIMAL" />
+        <result column="send_province" property="sendProvince" jdbcType="DECIMAL" />
+        <result column="send_city" property="sendCity" jdbcType="DECIMAL" />
+        <result column="send_district" property="sendDistrict" jdbcType="DECIMAL" />
+        <result column="send_address" property="sendAddress" jdbcType="VARCHAR" />
+        <result column="receive_province" property="receiveProvince" jdbcType="DECIMAL" />
+        <result column="receive_city" property="receiveCity" jdbcType="DECIMAL" />
+        <result column="receive_district" property="receiveDistrict" jdbcType="DECIMAL" />
+        <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="lastupdate_time" property="lastupdateTime" jdbcType="DATE" />
+
+    </resultMap>
+
+    <select id="queryAllOrder" parameterType="com.herig.useShardingProxy.dto.GooseOrderInfo" resultMap="BaseResultMap">
+        select *
+        from goose_order_info
+
+    </select>
+
+    <insert id="insertOrderInfo"  >
+        INSERT INTO goose_order_info ( order_number,  user_id, total_price, total_discount_price, order_status, logistics_id, send_province, send_city, send_district, send_address, receive_province, receive_city, receive_district, receive_address, create_time, lastupdate_time )
+        VALUES
+            (
+                #{orderNumber},
+                1,
+                #{totalPrice},
+                #{totalDiscountPrice},
+                #{orderStatus},
+                NULL,
+                1,
+                1,
+                1,
+                #{sendAddress},
+                1,
+                1,
+                1,
+                #{receiveAddress},
+                SYSDATE(),
+                SYSDATE()
+            )
+    </insert>
+
+    <insert id="updateOrderInfo"  >
+        update goose_order_info a set a.order_number = 'update test' where  a.order_id = #{orderId}
+    </insert>
+
+    <insert id="deleteOrderInfo"  >
+        delete from  goose_order_info a where  a.order_id = #{orderId}
+    </insert>
+
+
+</mapper>

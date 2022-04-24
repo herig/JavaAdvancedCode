@@ -1,0 +1,117 @@
+#schemaName: sharding_db
+#
+#dataSources:
+#  ds0:
+#    url: jdbc:mysql://127.0.0.1:3307/demo_ds_0
+#    username: root
+#    password: 123456
+#    connectionTimeoutMilliseconds: 30000
+#    idleTimeoutMilliseconds: 60000
+#    maxLifetimeMilliseconds: 1800000
+#    maxPoolSize: 50
+#    minPoolSize: 1
+#  ds1:
+#    url: jdbc:mysql://127.0.0.1:3307/demo_ds_1
+#    username: root
+#    password: 123456
+#    connectionTimeoutMilliseconds: 30000
+#    idleTimeoutMilliseconds: 60000
+#    maxLifetimeMilliseconds: 1800000
+#    maxPoolSize: 50
+#    minPoolSize: 1
+#
+#rules:
+#- !SHADOW
+#  dataSources:
+#    shadowDataSource:
+#      sourceDataSourceName: ds0
+#      shadowDataSourceName: ds1
+#  tables:
+#    goose_order_info:
+#      actualDataNodes: ds_${0..1}.goose_order_info_${0..16}
+#      tableStrategy:
+#        standard:
+#          shardingColumn: order_id
+#          shardingAlgorithmName: goose_order_info_inline
+#        keyGenerateStrategy:
+#          column: order_id
+#          keyGeneratorName: snowflake
+
+######################################################################################################
+#
+# If you want to connect to MySQL, you should manually copy MySQL driver to lib directory.
+#
+######################################################################################################
+#
+#schemaName: shadow_db
+#
+#dataSources:
+#  ds:
+#    url: jdbc:mysql://127.0.0.1:3306/demo_ds_0?serverTimezone=UTC&useSSL=false
+#    username: root
+#    password:
+#    connectionTimeoutMilliseconds: 30000
+#    idleTimeoutMilliseconds: 60000
+#    maxLifetimeMilliseconds: 1800000
+#    maxPoolSize: 50
+#    minPoolSize: 1
+#  shadow_ds:
+#    url: jdbc:mysql://127.0.0.1:3306/demo_ds_1?serverTimezone=UTC&useSSL=false
+#    username: root
+#    password:
+#    connectionTimeoutMilliseconds: 30000
+#    idleTimeoutMilliseconds: 60000
+#    maxLifetimeMilliseconds: 1800000
+#    maxPoolSize: 50
+#    minPoolSize: 1
+#
+#rules:
+#- !SHADOW
+#  dataSources:
+#    shadowDataSource:
+#      sourceDataSourceName: ds
+#      shadowDataSourceName: shadow_ds
+#  tables:
+#    t_order:
+#      dataSourceNames:
+#        - shadowDataSource
+#      shadowAlgorithmNames:
+#        - user-id-insert-match-algorithm
+#        - user-id-select-match-algorithm
+#    t_order_item:
+#      dataSourceNames:
+#        - shadowDataSource
+#      shadowAlgorithmNames:
+#        - user-id-insert-match-algorithm
+#        - user-id-update-match-algorithm
+#        - user-id-select-match-algorithm
+#    t_address:
+#      dataSourceNames:
+#        - shadowDataSource
+#      shadowAlgorithmNames:
+#        - user-id-insert-match-algorithm
+#        - user-id-select-match-algorithm
+#        - simple-hint-algorithm
+#  shadowAlgorithms:
+#    user-id-insert-match-algorithm:
+#      type: REGEX_MATCH
+#      props:
+#        operation: insert
+#        column: user_id
+#        regex: "[1]"
+#    user-id-update-match-algorithm:
+#      type: REGEX_MATCH
+#      props:
+#        operation: update
+#        column: user_id
+#        regex: "[1]"
+#    user-id-select-match-algorithm:
+#      type: REGEX_MATCH
+#      props:
+#        operation: select
+#        column: user_id
+#        regex: "[1]"
+#    simple-hint-algorithm:
+#      type: SIMPLE_HINT
+#      props:
+#        foo: bar
