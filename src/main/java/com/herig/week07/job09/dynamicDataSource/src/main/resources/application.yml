@@ -1,0 +1,25 @@
+server:
+  port: 8801
+
+mybatis:
+  mapper-locations: classpath:/com/herig/dynamicDataSource/mapper/*.xml
+  type-aliases-package: com.herig.dynamicDataSource.dto
+
+spring:
+  datasource:
+    # 数据源1
+    druid:
+      first:
+        url: jdbc:mysql://localhost:3306/geek_learn?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+      # 数据源2  需要创建对应数据库  更改该库中 sys_user 表
+      second:
+        url: jdbc:mysql://localhost:3306/geek_learn_slave?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+
