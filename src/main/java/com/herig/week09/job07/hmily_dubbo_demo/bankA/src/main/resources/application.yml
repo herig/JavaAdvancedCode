@@ -1,0 +1,35 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: bankA-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/geek_learn_0?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+dubbo:
+  application:
+    name: bankA-server
+  registry:
+    protocol: zookeeper
+    address: zookeeper://127.0.0.1:2181
+  protocol:
+    name: dubbo
+    port: 20880
+  scan:
+    base-packages: com.yvonne.bankA.service , com.yvonne.bankcommon.service
+
+logging:
+  level:
+    root: info
+    org.springframework.web: info
+    org.apache.ibatis: info
+    org.dromara.hmily.bonuspoint: debug
+    org.dromara.hmily.lottery: debug
+    org.dromara.hmily: debug
+    io.netty: info
+    io.xusj: debug
+
