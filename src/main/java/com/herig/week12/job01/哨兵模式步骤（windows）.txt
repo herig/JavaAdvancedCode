@@ -1,0 +1,18 @@
+1.复制两个redis示例
+
+2.分别创建sentinel.conf （见文件）
+
+3.改端口
+
+4.redis-server sentinel26379.conf --sentinel 启动sentinel
+
+5.redis-cli -p 26379 连接sentinel控制台
+
+6.info sentinel 查看信息
+
+7.回到redis控制台，info 查看6379、6380的role
+
+8.停掉6379
+
+9.重新查看 6380的role 由slave变成了master ok
+

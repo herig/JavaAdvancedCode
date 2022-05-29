@@ -1,0 +1,20 @@
+1.下载，分别放两个文件夹
+https://github.com/tporadowski/redis/releases
+
+2.修改配置文件，端口号分别为6379、6380
+
+3.分别启动redis 
+redis-server redis6379.windows.conf
+redis-server redis6380.windows.conf
+
+4.cmd分别连接redis
+Redis-x64-5.0.14.1>redis-cli -p 6379
+Redis-x64-5.0.14.1>redis-cli -p 6380
+
+5.info查看信息
+
+6.6380那台，使用SLAVEOF 127.0.0.1 6379 切换成 6379的从
+
+7.info再次查看信息 role变成slave
+
+8.set/get命令测试 ok
