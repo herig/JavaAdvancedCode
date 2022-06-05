@@ -1,0 +1,24 @@
+spring:
+  kafka:
+    #指定kafka server的地址，集群配多个
+    bootstrap-servers: 127.0.0.1:9001,127.0.0.1:9002,127.0.0.1:9003
+    #配置生产者
+    producer:
+      #确认模式 all为最小副本数
+      acks: all
+      #写入失败时重试次数
+      retries: 0
+      #发送的消息达到一定大小，立即发出
+      batch-size: 10240
+      groupId: myGroup
+      #消息key和消息体的编解码方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #连接超时时间
+      properties:
+        request.timeout.ms: 30000
+    consumer:
+      groupId: myGroup
+      #消息key和消息体的编解码方式
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDserializer: org.apache.kafka.common.serialization.StringDeserializer
