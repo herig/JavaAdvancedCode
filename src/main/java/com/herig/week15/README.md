@@ -156,4 +156,85 @@ callable：有返回值，可用future接收
 很好地集成各种框架和组件。ORM框架上推荐Mybatis，显式的SQL更加灵活，也更容易审查。Stream 和 Lambda 表达式的熟练运用可以很
 大程度上减轻代码量，提高开发效率，但对于新人或不熟悉该语法的人来说，阅读上可能有些困难，且处理不好很容易报空指针异常。
 
+5.MySQL 数据库和 SQL
+
+技术关键点：
+
+1.SQL语言
+
+数据查询语言DDL：保留字 SELECT 是 DQL（也是所有 SQL）用得最多的动词，其他 DQL 常用的保留字有 WHERE，ORDER BY，GROUP BY
+和 HAVING。
+
+数据操作语言DML：包括动词  INSERT、UPDATE 和  DELETE。它们分别用于添加、修改和删除。
+
+事务控制语言TCL：它的语句能确保被  DML 语句影响的表的所有行及时得以更新。包括COMMIT（提交）命令、SAVEPOINT（保存点）命令、
+ROLLBACK（回滚）命令。
+
+数据控制语言DCL：它的语句通过  GRANT 或  REVOKE 实现权限控制，确定单个用户和用户组对数据库对象的访问。某些  RDBMS 可用  
+GRANT 或  REVOKE 控制对表单个列的访问。
+
+数据定义语言DDL：其语句包括动词  CREATE,ALTER 和  DROP。在数据库中创建新表或修改、删除表(CREAT TABLE 或  DROP TABLE);
+为表加入索引等。
+
+指针控制语言CCL：它的语句，像  DECLARE CURSOR，FETCH INTO 和  UPDATE WHERE CURRENT 用于对 一个或多个表单独行的操作。
+
+2.MySQL事务
+
+事务可靠性模型 ACID：
+
+Atomicity原子性：原子性，一次事务中的操作要么全部成功，要么全部失败。
+
+Consistency一致性：一致性，跨表、跨行、跨事务，数据库始终保持一致状态。
+
+Isolation隔离性： 隔离性，可见性，保护事务不会互相干扰，包含4种隔离级别。
+
+Durability持久性：持久性，事务提交成功后，不会丢数据。如电源故障，系统崩溃。
+
+3.MySQL事务隔离级别
+
+读未提交: READ UNCOMMITTED
+
+读已提交:READ COMMITTED
+
+可重复读:REPEATABLE READ
+
+可串行化:SERIALIZABLE
+
+4.MySQL锁
+
+表级锁
+
+共享意向锁（IS）: 打算在某些行上设置共享锁
+
+排他意向锁（IX）: 打算对某些行设置排他锁
+
+Insert 意向锁: Insert 操作设置的间隙锁
+
+其他：自增锁（AUTO-IN）；LOCK TABLES/DDL
+
+行级锁
+
+记录锁（Record）: 始终锁定索引记录，注意隐藏的聚簇索引
+
+间隙锁（Gap）: 锁住一个范围
+
+临键锁（Next-Key）: 记录锁+间隙锁的组合; 可“锁定”表中不存在记录
+
+谓词锁（Predicat）: 空间索引
+
+5.存储引擎
+
+MyISAM
+
+不支持事务，也不支持外键约束，只支持全文索引，数据文件和索引文件是分开保存的
+
+InnoDB
+
+支持事务，支持4个事务隔离级别
+
+经验认识：MySQL是一个关系型数据库管理系统，MySQL数据库和SQL这一模块的重点在于了解基础的SQL语句，索引，事务。当然MySQL底层
+的存储引擎以及相对应的数据结构也很重要，了解了这些才能更好地理解表结构如何设计，SQL如何优化。更进一步地，我们可以将用上mysql
+的主从复制，以及与代码结合实现读写分离，从而真正做到实现mysql的高可用。
+
+
 
