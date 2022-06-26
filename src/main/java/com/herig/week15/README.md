@@ -346,7 +346,46 @@ spring cloud
 
 
 
+9.分布式消息队列
 
+技术关键点：
+
+1.Kafka:分布式的，基于发布/订阅的消息系统
+
+broker：Kafka 集群包含一个或多个服务器，这种服务器被称为broker（服务器代理）
+
+Topic：每条发布到Kafka集群的消息都有一个类别，这个类别被称为topic。（物理上不同的topic的消息分开存储， 逻辑上一个topic的消息
+虽然保存于一个或者多个broker上，但用户只需指定消息的topic即可生产或消费数据而不必关心数据存于何处）
+
+partition：partition是物理上的概念，每个topic包含一个或者多个partition
+
+producer：生产者
+
+consumer：消费者
+
+consumer group：消费者组，每个consumer属于一个特定的consumer group（）
+
+2.RabbitMQ:
+
+queue：队列
+
+exchange：交换器
+
+routekey：绑定queue和exchange的key
+
+binding：
+
+3.RocketMQ:作为Kafaka的Java语言重新实现版，没太大本质区别
+
+纯java开发，不需要zk
+
+支持延迟投递，消息追溯 （意义不大）
+
+多个队列使用一个日志文件，所以不存在kafka过多topic问题
+
+经验总结：消息队列具有异步通信、系统解耦、削峰平谷、可靠通信等优点，合理话的采用消息队列，可以很大程度上减少系统因为消息而产生的开销，
+并且对于不同系统之间的消息传递起到了很好的解耦作用，大家只需要把消息都发送到消息队列中，就可以异步的发送到想要传递到的系统，并且不会因为
+某一台系统的宕机或网络波动而导致多个系统因消息发不出去而产生的业务停滞。
 
 
 
